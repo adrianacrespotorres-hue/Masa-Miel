@@ -1,10 +1,21 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from '../constants';
 
-// Initialize the API client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Función para obtener la API Key de forma segura
+const getApiKey = () => {
+  try {
+    // Intentamos acceder a process.env solo si está definido
+    if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+      return process.env.API_KEY;
+    }
+  } catch (e) {
+    console.warn("Masa & Miel: No se pudo acceder a process.env.API_KEY");
+  }
+  return '';
+};
 
-// Create a persistent chat session helper
+const ai = new GoogleGenAI({ apiKey: getApiKey() });
+
 export const createChatSession = (): Chat => {
   return ai.chats.create({
     model: 'gemini-3-flash-preview',
