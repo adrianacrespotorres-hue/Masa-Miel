@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, X, Loader2, Sparkles } from 'lucide-react';
-import { ChatMessage } from '../types';
-import { createChatSession, sendMessageToGemini } from '../services/gemini';
+import { ChatMessage } from '../types.ts';
+import { createChatSession, sendMessageToGemini } from '../services/gemini.ts';
 import { Chat, GenerateContentResponse } from '@google/genai';
 import ReactMarkdown from 'react-markdown';
 
@@ -14,10 +14,8 @@ const AIChat: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Use a ref to persist the chat session across renders
   const chatSessionRef = useRef<Chat | null>(null);
 
-  // Initialize chat session once
   useEffect(() => {
     if (!chatSessionRef.current) {
         chatSessionRef.current = createChatSession();
@@ -49,7 +47,6 @@ const AIChat: React.FC = () => {
         const stream = await sendMessageToGemini(chatSessionRef.current, userMessage.text);
         
         const botMessageId = (Date.now() + 1).toString();
-        // Add placeholder message
         setMessages(prev => [...prev, { id: botMessageId, role: 'model', text: '' }]);
 
         let fullText = '';
@@ -86,14 +83,12 @@ const AIChat: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end pointer-events-none">
-      {/* Chat Window */}
       <div 
         className={`bg-white rounded-2xl shadow-2xl border border-bakery-200 w-80 sm:w-96 mb-4 overflow-hidden transition-all duration-300 origin-bottom-right pointer-events-auto ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-10 invisible'
         }`}
         style={{ maxHeight: '600px', height: '80vh' }}
       >
-        {/* Header */}
         <div className="bg-bakery-800 p-4 flex justify-between items-center text-white">
           <div className="flex items-center space-x-2">
             <Sparkles size={18} className="text-accent-500" />
@@ -107,7 +102,6 @@ const AIChat: React.FC = () => {
           </button>
         </div>
 
-        {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-bakery-50 h-[calc(100%-130px)]">
           {messages.map((msg) => (
             <div
@@ -122,7 +116,9 @@ const AIChat: React.FC = () => {
                 }`}
               >
                 {msg.role === 'model' ? (
-                   <ReactMarkdown>{msg.text}</ReactMarkdown>
+                   <div className="prose prose-sm prose-stone">
+                     <ReactMarkdown>{msg.text}</ReactMarkdown>
+                   </div>
                 ) : (
                     msg.text
                 )}
@@ -139,7 +135,6 @@ const AIChat: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Area */}
         <div className="p-4 bg-white border-t border-bakery-100 absolute bottom-0 w-full h-[70px]">
           <div className="flex items-center gap-2">
             <input
@@ -162,7 +157,6 @@ const AIChat: React.FC = () => {
         </div>
       </div>
 
-      {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`pointer-events-auto bg-bakery-800 hover:bg-bakery-700 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center justify-center group ${isOpen ? 'rotate-90 opacity-0 absolute' : 'opacity-100'}`}

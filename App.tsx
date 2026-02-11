@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import ProductGrid from './components/ProductGrid';
-import CartSidebar from './components/CartSidebar';
-import AIChat from './components/AIChat';
-import Footer from './components/Footer';
-import { Product, CartItem } from './types';
-import { PRODUCTS } from './constants';
+import React, { useState } from 'react';
+import Header from './components/Header.tsx';
+import Hero from './components/Hero.tsx';
+import ProductGrid from './components/ProductGrid.tsx';
+import CartSidebar from './components/CartSidebar.tsx';
+import AIChat from './components/AIChat.tsx';
+import Footer from './components/Footer.tsx';
+import { Product, CartItem } from './types.ts';
+import { PRODUCTS } from './constants.ts';
 
 const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Cart Logic
   const addToCart = (product: Product) => {
     setCartItems(prev => {
       const existing = prev.find(item => item.id === product.id);

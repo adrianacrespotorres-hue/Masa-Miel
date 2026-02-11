@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Masa & Miel | Panadería Artesanal</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥐</text></svg>">
+    
+    <!-- Proteger contra errores de 'process is not defined' -->
+    <script>
+      window.process = { env: { NODE_ENV: 'production' } };
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -47,26 +53,26 @@
       .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
     </style>
     <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@19.0.0",
-        "react/": "https://esm.sh/react@19.0.0/",
-        "react-dom": "https://esm.sh/react-dom@19.0.0",
-        "react-dom/": "https://esm.sh/react-dom@19.0.0/",
-        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.460.0",
-        "@google/genai": "https://esm.sh/@google/genai@0.2.1",
-        "react-markdown": "https://esm.sh/react-markdown@9.0.1?bundle"
-      }
-    }
-    </script>
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react",
+    "@google/genai": "https://esm.sh/@google/genai@0.2.1",
+    "react-markdown": "https://esm.sh/react-markdown@9.0.1?bundle",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
     <script type="module" src="./index.tsx"></script>
   </head>
   <body class="bg-bakery-50 text-bakery-900 antialiased selection:bg-accent-500 selection:text-white">
     <div id="root">
       <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: serif; color: #5d4037;">
         <div style="text-align: center;">
-          <p style="font-size: 1.5rem; margin-bottom: 10px;">🥐 Cargando Masa & Miel...</p>
+          <p style="font-size: 1.5rem; margin-bottom: 10px;">🥐 Horneando Masa & Miel...</p>
           <div style="width: 40px; height: 40px; border: 4px solid #eaddd7; border-top: 4px solid #8d6e63; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
         </div>
       </div>

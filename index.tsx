@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App.tsx';
 
-console.log("Masa & Miel: Iniciando montaje de la aplicación...");
+console.log("Masa & Miel: Iniciando montaje...");
 
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
-  console.error("Masa & Miel: No se encontró el elemento raíz 'root' en el DOM.");
+  console.error("Masa & Miel: No se encontró el elemento raíz 'root'.");
 } else {
   try {
     const root = ReactDOM.createRoot(rootElement);
@@ -16,14 +16,13 @@ if (!rootElement) {
         <App />
       </React.StrictMode>
     );
-    console.log("Masa & Miel: Aplicación renderizada correctamente.");
+    console.log("Masa & Miel: Aplicación montada.");
   } catch (error) {
-    console.error("Masa & Miel: Error crítico durante el renderizado:", error);
+    console.error("Masa & Miel: Error al montar:", error);
     rootElement.innerHTML = `
-      <div style="padding: 40px; text-align: center; font-family: sans-serif; color: #3e2723;">
-        <h1 style="font-serif">¡Ups! Algo salió mal al hornear la página.</h1>
-        <p>Por favor, intenta recargar. Si el problema persiste, contacta a soporte.</p>
-        <pre style="text-align: left; background: #f2e8e5; padding: 15px; border-radius: 8px; font-size: 12px; margin-top: 20px; overflow-x: auto;">${error instanceof Error ? error.message : String(error)}</pre>
+      <div style="padding: 40px; text-align: center; font-family: sans-serif;">
+        <h2>Error al cargar la panadería</h2>
+        <pre style="background: #f2e8e5; padding: 10px; margin-top: 20px;">${error}</pre>
       </div>
     `;
   }
